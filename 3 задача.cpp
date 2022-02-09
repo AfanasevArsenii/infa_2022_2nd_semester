@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 signed int check(signed int num_1_check, signed int num_2_check, signed int count_check) {
 	if (num_2_check > num_1_check)
 		count_check++;
