@@ -195,10 +195,6 @@ void move_dislocations(int program_num, int& num, int num0, int size, int& count
 	}
 }
 
-void program_1() {
-}
-
-
 int main() {
 	int program_num = enter_program();
 	int size = enter_size();
