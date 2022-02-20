@@ -54,9 +54,6 @@ void set_dislocations_1(int num0, int size, int square[], int disloc[], int disl
 		disloc[i] = coord_i;
 		square[disloc[i]] = 1;
 
-		std::cout << disloc[i] << " ";
-		std::cout << std::endl;
-
 	}
 }
 
@@ -88,12 +85,12 @@ void disloc_deactiv(int& num_moved, int disloc_moved[], int square[], int i) {
 		tmp_disloc = disloc_moved[num_moved - 1];
 		disloc_moved[num_moved - 1] = disloc_moved[i];
 		disloc_moved[i] = tmp_disloc;
-		square[disloc_moved[num_moved - 1]] = 3;
+		square[disloc_moved[num_moved - 1]] = 2;
 		num_moved--;
 	}
 	else {
 		if (num_moved = 1) {
-			square[disloc_moved[i]] = 3;
+			square[disloc_moved[i]] = 2;
 			num_moved--;
 		}
 	}
@@ -188,7 +185,7 @@ void move_dislocations(int program_num, int& num, int num0, int size, int& count
 			}
 			else {
 				for (int j = 0; j < 4; j++) {
-					if (square[neighbors_i[j]] == 1 || square[neighbors_i[j]] == 3) {
+					if (square[neighbors_i[j]] == 1 || square[neighbors_i[j]] == 2) {
 						disloc_deactiv(num_moved, disloc_moved, square, i);
 						break;
 					}
@@ -200,6 +197,7 @@ void move_dislocations(int program_num, int& num, int num0, int size, int& count
 
 void program_1() {
 }
+
 
 int main() {
 	int program_num = enter_program();
