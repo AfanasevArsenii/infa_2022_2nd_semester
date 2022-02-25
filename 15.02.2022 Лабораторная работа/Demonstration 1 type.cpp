@@ -2,28 +2,22 @@
 #include <cstdlib>
 #include <ctime>
 
-int enter_program() {
-	int program_num;
+void enter_params(int &program_num, int &size, int &num0) {
 	std::cout << "Enter the number of pragram: " << std::endl;
 	std::cin >> program_num;
 
-	return program_num;
-}
-
-int enter_size() {
-	int size;
 	std::cout << "Enter the size: " << std::endl;
 	std::cin >> size;
 
-	return size;
+	std::cout << "Enter num of dislocates: " << std::endl;
+	std::cin >> num0;
 }
 
-int enter_num() {
-	int num;
-	std::cout << "Enter num of dislocates: " << std::endl;
-	std::cin >> num;
-
-	return num;
+void print_square_1(int size, int square[]) {
+	for (int i = 0; i < size; i++) {
+		std::cout << square[i] << ' ';
+	}
+	std::cout << std::endl;
 }
 
 void print_square_2(int size, int square[]) {
@@ -35,15 +29,8 @@ void print_square_2(int size, int square[]) {
 	std::cout << std::endl;
 }
 
-void print_square_1(int size, int square[]) {
-	for (int i = 0; i < size; i++) {
-		std::cout << square[i] << ' ';
-	}
-	std::cout << std::endl;
-}
-
 void set_dislocations_1(int num0, int size, int square[], int disloc[], int disloc_moved[]) {
-	int coord_i;
+	int coord_i = 0;
 
 	for (int i = 0; i < num0; i++) {
 
@@ -58,9 +45,9 @@ void set_dislocations_1(int num0, int size, int square[], int disloc[], int disl
 }
 
 void set_dislocations_2(int num0, int size, int square[], int disloc[], int disloc_moved[]) {
-	int coord_i;
-	int coord_x_i;
-	int coord_y_i;
+	int coord_i = 0;
+	int coord_x_i = 0;
+	int coord_y_i = 0;
 
 	for (int i = 0; i < num0; i++) {
 
@@ -195,33 +182,23 @@ void move_dislocations(int program_num, int& num, int num0, int size, int& count
 	}
 }
 
-int main() {
-	int program_num = enter_program();
-	int size = enter_size();
-	int num0 = enter_num();
-	int num = num0;
-	int square[100] = { 0 };
-	int disloc[100] = { 0 };
-	int disloc_moved[100] = { 0 };
-	int direction[100] = { 0 };
-	int counter = 0;
+void program_1(int program_num, int num0, int& num, int size, int& counter, int square[], int disloc[], int disloc_moved[], int direction[]) {
+	num = num0;
+	set_dislocations_1(num0, size, square, disloc, disloc_moved);
 
-	srand(static_cast<unsigned int> (time(0)));
+	print_square_1(size, square);
 
-
-	if (program_num == 1) {
-		set_dislocations_1(num0, size, square, disloc, disloc_moved);
-
+	while (num > 0) {
+		move_dislocations(program_num, num, num0, size, counter, square, disloc, disloc_moved, direction);
 		print_square_1(size, square);
-
-		while (num > 0) {
-			move_dislocations(program_num, num, num0, size, counter, square, disloc, disloc_moved, direction);
-			print_square_1(size, square);
-		}
-
-		std::cout << "Counter " << counter << std::endl;
 	}
-	if (program_num == 2) {
+
+	std::cout << "Counter " << counter << std::endl;
+}
+
+
+void program_2(int program_num, int num0, int& num, int size, int& counter, int square[], int disloc[], int disloc_moved[], int direction[]){
+		num = num0;
 		set_dislocations_2(num0, size, square, disloc, disloc_moved);
 
 		print_square_2(size, square);
@@ -234,6 +211,29 @@ int main() {
 
 
 		std::cout << "Counter " << counter << std::endl;
+}
+
+int main() {
+	const int big_size = 100;
+	int program_num = 0;
+	int size = 0;
+	int num0 = 0;
+	int num;
+	int square[big_size] = { 0 };
+	int disloc[big_size] = { 0 };
+	int disloc_moved[big_size] = {0};
+	int direction[big_size] = { 0 };
+	int counter = 0;
+
+	srand(static_cast<unsigned int> (time(0)));
+
+	enter_params(program_num, size, num0);
+
+	if (program_num == 1) {
+		program_1(program_num, num0, num, size, counter, square, disloc, disloc_moved, direction);
+	}
+	if (program_num == 2) {
+		program_2(program_num, num0, num, size, counter, square, disloc, disloc_moved, direction);
 	}
 	return 0;
 }
