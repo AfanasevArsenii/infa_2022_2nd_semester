@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <iomanip>
 #include <cmath>
 
@@ -130,8 +130,7 @@ double mean_double(float psi[], float pdf[], float const dv, int const size) {
 void set_arrays(float psi[], float pdf[], int const size, float const f_pi, float const f_e, float T) {
     for (int i = 0; i < size; i++) {
         psi[i] = abs(i * 0.05f - size * 0.01f);
-        pdf[i] = 1 / (sqrt(f_pi * T)) * pow(f_e, -(i * 0.05f - size * 0.01f) * (i * 0.05f - size * 0.01f) / T);
-        
+        pdf[i] = 1 / (sqrt(f_pi * T)) * pow(f_e, -(i * 0.05f - size * 0.01f) * (i * 0.05f - size * 0.01f) / T);   
     }
 }
 
@@ -167,8 +166,4 @@ int main(){
     float T = 1.f;
 
     print_dem(psi, pdf, dv, size, f_pi, f_e, T);
-
-
-    
-
 }
