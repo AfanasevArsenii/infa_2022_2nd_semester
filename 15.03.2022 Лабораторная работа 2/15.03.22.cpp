@@ -167,8 +167,4 @@ int main(){
     float T = 1.f;
 
     print_dem(psi, pdf, dv, size, f_pi, f_e, T);
-
-
-    
-
 }
