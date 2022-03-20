@@ -145,22 +145,6 @@ void print_res(float psi[], float pdf[], float const dv, int const size) {
     std::cout << "mean_double: " << mean_double(psi, pdf, dv, size) << std::endl;
 }
 
-void print_arr(float psi[], float pdf[], float const dv, int const size, float const f_pi, float const f_e, float T) {
-    for (int j = 0; j != 300; j++) {
-        set_arrays(psi, pdf, size, f_pi, f_e, T);
-        std::cout << std::setprecision(12) << std::fixed;
-        //std::cout << log(mean(psi, pdf, dv, size)/ (size * 0.01f)) << std::endl;
-        //std::cout << log(sum_recursion(psi, pdf, dv, size) / (size * 0.01f)) << std::endl;
-        //std::cout << log(nearby(psi, pdf, dv, size) / (size * 0.01f) ) << std::endl;
-        //std::cout << log(kehen(psi, pdf, dv, size)/ (size * 0.01f)) << std::endl;
-        //std::cout << log(fma(psi, pdf, dv, size) / (size * 0.01f)) << std::endl;
-        //std::cout << log(mean_double(psi, pdf, dv, size) / (size * 0.01f)) << std::endl;
-        //std::cout << log(sqrt(T / f_pi)) << std::endl;
-        //std::cout << log(T) << std::endl;
-        T += 1.f;
-    }
-}
-
 void print_dem(float psi[], float pdf[], float const dv, int const size, float const f_pi, float const f_e, float T) {
     for (int j = 0; j != 300; j++) {
         set_arrays(psi, pdf, size, f_pi, f_e, T);
@@ -182,7 +166,6 @@ int main(){
     int sum = 0;
     float T = 1.f;
 
-    //print_arr(psi, pdf, dv, size, f_pi, f_e, T);
     print_dem(psi, pdf, dv, size, f_pi, f_e, T);
 
 
