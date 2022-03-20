@@ -54,7 +54,9 @@ float sum_recursion(float psi[], float pdf[], float const dv, int const size) {
 
 
 float nearby(float psi[], float pdf[], float const dv, int const size) {
-    float new_arr[1000] = { 0 };
+    float sum = 0.f;
+    float* new_arr = new float[size];
+    //float new_arr[10000] = { 0 };
     int j = 1;
     for (int i = 0; i < size; i++) {
         new_arr[i] = psi[i]*pdf[i];
@@ -66,7 +68,9 @@ float nearby(float psi[], float pdf[], float const dv, int const size) {
         }
         j = j * 2;
     }
-    return dv * new_arr[0];
+    sum = new_arr[0];
+    delete[] new_arr;
+    return dv * sum;
 }
 
 float kehen(float psi[], float pdf[], float const dv, int const size) {
@@ -127,10 +131,10 @@ double mean_double(float psi[], float pdf[], float const dv, int const size) {
     return (double)dv * sum;
 }
 
-void set_arrays(float psi[], float pdf[], int const size, float const f_pi, float const f_e, float T) {
+void set_arrays(float psi[], float pdf[], int const size, float const dv, float const f_pi, float const f_e, float T) {
     for (int i = 0; i < size; i++) {
-        psi[i] = abs(i * 0.05f - size * 0.01f);
-        pdf[i] = 1 / (sqrt(f_pi * T)) * pow(f_e, -(i * 0.05f - size * 0.01f) * (i * 0.05f - size * 0.01f) / T);
+        psi[i] = abs(i * dv - size * 0.025f);
+        pdf[i] = 1 / (sqrt(f_pi * T)) * pow(f_e, -(i * dv - size * 0.025f) * (i * dv - size * 0.025f) / T);
         
     }
 }
@@ -147,7 +151,7 @@ void print_res(float psi[], float pdf[], float const dv, int const size) {
 
 void print_dem(float psi[], float pdf[], float const dv, int const size, float const f_pi, float const f_e, float T) {
     for (int j = 0; j != 300; j++) {
-        set_arrays(psi, pdf, size, f_pi, f_e, T);
+        set_arrays(psi, pdf, size, dv, f_pi, f_e, T);
         std::cout << "T: " << T << std::endl;
         print_res(psi, pdf, dv, size);
 
@@ -155,16 +159,24 @@ void print_dem(float psi[], float pdf[], float const dv, int const size, float c
     }
 }
 
+
+
 int main(){
     float const f_pi = 3.14159265359f;
     float const f_e = 2.718281828459f;
 
-    int const size = 1000;
-    float psi[size] = { 0 };
-    float pdf[size] = { 0 };
-    float const dv = 0.01f;
+    int const size = 10000;
+    float* psi = new float[size];
+    float* pdf = new float[size];
+    float const dv = 0.05f;
     int sum = 0;
     float T = 1.f;
 
+   
     print_dem(psi, pdf, dv, size, f_pi, f_e, T);
+
+
+    delete[] psi;
+    delete[] pdf;
+     
 }
