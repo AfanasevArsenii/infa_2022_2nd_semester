@@ -1,4 +1,4 @@
-/*#include <iostream>
+#include <iostream>
 
 struct BinaryTree {
     BinaryTree* left;
@@ -60,5 +60,3 @@ int main() {
     delete_Tree(FirstTree);
     return 0;
 }
-
-*/
