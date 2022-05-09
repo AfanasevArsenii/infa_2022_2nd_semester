@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 struct BinaryTree {
     BinaryTree* left;
@@ -67,58 +68,52 @@ BinaryTree* get_Tree(Queue** q) {
     return old_Tree;
 }
 
-void form_Queue(BinaryTree* Tree) {
-    Queue* q = nullptr;
-    int level = 0;
-    int counter_0 = 0;
-    int counter_n = 0;
-    int check_line = 1;
-    add_Queue(&q, Tree);
-    Queue* q_first = q;
-    while (q != nullptr) {
+void show_Tree(BinaryTree* Tree){
+    Queue* global_q = nullptr;
+    add_Queue(&global_q, Tree);
+    int empty_line = 40;
+    bool is_row_empty = false;
+    
+    while (is_row_empty == false) {
+        Queue* local_q = nullptr;
+        is_row_empty = true;
 
-        Tree = get_Tree(&q);
+        for (int j = 0; j < empty_line; j++)
+            std::cout << ' ';
+        while (global_q != nullptr)
+        {
+            Tree = get_Tree(&global_q);
 
-        if (Tree->key == 0) {
-            counter_0++;
-        }
-        else {
-            counter_0 = 0;
-        }
+            if (Tree != nullptr && Tree->key != 0)
+            {
+                std::cout << Tree->key;
+                add_Queue(&local_q, Tree->left);
+                add_Queue(&local_q, Tree->right);
 
-        counter_n++;
-
-        if (check_line == 1) {
-            for (int i = 0; i != 40 - pow(2, level); i++) {
+                if (Tree->left != nullptr) {
+                    is_row_empty = false;
+                }
+                if (Tree->right != nullptr) {
+                    is_row_empty = false;
+                }
+            }
+            else
+            {
                 std::cout << " ";
+                add_Queue(&local_q, nullptr);
+                add_Queue(&local_q, nullptr);
             }
-            check_line = 0;
+            for (int j = 0; j < empty_line * 2 - 2; j++)
+                std::cout << ' ';
         }
+        std::cout << std::endl;
 
-        if (Tree->key != 0) {
-            std::cout << Tree->key << " ";
+        empty_line /= 1.5;
+        while (local_q != nullptr) {
+            Tree = get_Tree(&local_q);
+            add_Queue(&global_q, Tree);
         }
-        else {
-            std::cout << "    ";
-        }
-
-        if (counter_n == pow(2, level)) {
-            level++;
-            std::cout << std::endl;
-            if (counter_n == counter_0) {
-                break;
-            }
-            counter_0 = 0;
-            counter_n = 0;
-            check_line = 1;
-        }
-
-        if (Tree->left != nullptr)
-            add_Queue(&q, Tree->left);
-        if (Tree->right != nullptr)
-            add_Queue(&q, Tree->right);
     }
-
 }
 
 void delete_Tree(BinaryTree* Tree) {
@@ -132,16 +127,6 @@ void delete_Tree(BinaryTree* Tree) {
     }
 }
 
-void delete_Queue(Queue* q) {
-    if (q == nullptr) {
-        return;
-    }
-    else {
-        delete_Queue(q->next);
-        delete q;
-    }
-}
-
 int main() {
     BinaryTree* FirstTree = nullptr;
     Queue* q = nullptr;
@@ -152,11 +137,11 @@ int main() {
         std::cin >> key;
         std::cout << std::endl;
         add_Tree(key, FirstTree);
-        form_Queue(FirstTree);
+        show_Tree(FirstTree);
         std::cout << std::endl;
     } while (key != 0);
-
-
+    
     delete_Tree(FirstTree);
+
     return 0;
 }
